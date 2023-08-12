@@ -1,7 +1,7 @@
 <!-- [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/sRKW9Tsr) -->
 
 # Simple REST API Server
-Hello I'm Yuza, in this task I made a simple rest API server for the financial tracker. here I have a little difficulty deploying and understanding TypeScript. but in the end it worked, thanks to the help of Jitsi friends.
+Hello I'm Yuza, in this task I made a simple REST API Server for the Financial Tracker. Here I have a little difficulty deploying and understanding TypeScript. But in the end it worked, thanks to the help of Jitsi friends.
 
 ## Deployment 
 Deployment link here [https://graceful-worm-capris.cyclic.app/](https://graceful-worm-capris.cyclic.app/)
