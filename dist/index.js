@@ -12,12 +12,12 @@ const app = (0, express_1.default)();
 const port = process.env.PORT || 8000;
 app.use(body_parser_1.default.json());
 app.listen(port, () => {
-    console.log(`⚡️[server]: Server is running at localhost:${port}`);
+    console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
 });
-// ================== Home ==========================
-app.get("/=", (req, res) => {
+app.get("/", (req, res) => {
     res.json({
-        messages: "Week 8 Assignment Alyuza",
+        messages: "Assignment Week 8",
+        transactions: data_1.transactions,
     });
 });
 // ================== Get all transactions ==========================
@@ -74,22 +74,4 @@ app.delete('/transactions/:transId', (req, res) => {
         res.status(404).json({ message: 'Financial  is Not Found' });
     }
 });
-// =================== Put Method ===========================
-// app.put('/transactions/:transId', (req: Request, res: Response) => {
-//     const id = parseInt(req.params.transId);
-//     const financialIndex = transactions.findIndex((obj) => obj.transId === id);
-//     if (financialIndex !== -1) {
-//         const updatedFinancial: Tran = {
-//             id,
-//             type: req.body.type,
-//             finance: req.body.finance,
-//             detail: req.body.detail,
-//             cash: req.body.cash,
-//         };
-//         financial[financialIndex] = updatedFinancial;
-//         res.json(updatedFinancial);
-//     } else {
-//         res.status(404).json({ message: 'Financial  is Not Found' });
-//     }
-// });
 exports.default = app;
