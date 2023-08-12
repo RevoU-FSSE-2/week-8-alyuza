@@ -6,69 +6,64 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const body_parser_1 = __importDefault(require("body-parser"));
-// import movies dari lokasi ./data
-const data_1 = require("./data");
+const data_1 = require("./data"); // import transactions dari lokasi ./data.ts
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const port = process.env.PORT || 8000;
 app.use(body_parser_1.default.json());
 // ================== Get all transactions ==========================
-app.get("/transactions/alyuza", (req, res) => {
+app.get("/transactions", (req, res) => {
     res.json({
         messages: "Success get all transactions data",
-        transactions: data_1.transactions
-        // data diatas diambil dari '/data.ts' let transactions
+        transactions: data_1.transactions,
     });
 });
 // ================== Get transactions by id ========================
-app.get("/transactions/alyuza/:id", (req, res) => {
+app.get("/transactions/:transId", (req, res) => {
     const Transaction = data_1.transactions.filter((item) => {
-        console.log("dalam", item);
-        return item.id == req.params.id;
+        return item.transId == req.params.transId;
     });
-    console.log("luar", Transaction);
     if (Transaction.length != 0) {
-        res.json({
+        res.status(201).json({
             message: "Success get transactions by id",
             Transaction,
         });
     }
     else {
         res.json({
-            message: "Failed get transactions by id"
+            message: "Transactions not found"
         });
     }
 });
-// ================== Post =========================================
-app.post("/transactions/alyuza", (req, res) => {
-    console.log(req.body);
-    data_1.transactions.push(req.body);
-    console.log(data_1.transactions);
-    res.json({
-        message: "Success adding one new transaction",
-        transactions: data_1.transactions,
+// ======================== Post Method ==========================
+app.post('/transactions/', (req, res) => {
+    const newPost = {
+        transId: req.body.transId,
+        name: req.body.name,
+        inputType: req.body.inputType,
+        amount: req.body.amount,
+        description: req.body.description,
+    };
+    data_1.transactions.push(newPost);
+    res.status(202).json({
+        message: "Successfully added a new transaction",
+        newPost,
     });
 });
-// Get route with parameter
-app.get("/barcelona/:panggilan", (req, res) => {
-    res.send(`halo nama panggilan saya ${req.params.panggilan}`);
-});
-// Put Method
-app.put("/", (req, res) => {
-    res.send("Nyobain put");
-});
-// Patch Method
-app.patch("/", (req, res) => {
-    res.send("Nyobain patch");
-});
-// Delete Method
-app.delete("/", (req, res) => {
-    res.send("Coba delete");
-});
-// Post
-app.post("/", (req, res) => {
-    console.log("Hello world");
-    res.send("Jangan post data kosong");
+// =============== Delete transaction by Id =======================
+app.delete('/transactions/:transId', (req, res) => {
+    const id = parseInt(req.params.transId);
+    const financialIndex = data_1.transactions.findIndex((obj) => obj.transId === id);
+    if (financialIndex !== -1) {
+        const deletedFinancial = data_1.transactions.splice(financialIndex, 1)[0];
+        res.json({
+            message: "This transaction is deleted",
+            deletedFinancial,
+        });
+    }
+    else {
+        res.status(404).json({ message: 'Financial  is Not Found' });
+    }
 });
 app.listen(port, () => {
     console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
