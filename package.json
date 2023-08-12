@@ -10,7 +10,7 @@
     "watch": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\""
   },
   "keywords": [],
-  "author": "",
+  "author": "Alyuza Satrio Prayogo",
   "license": "ISC",
   "dependencies": {
     "bootstrap": "^5.3.1",
