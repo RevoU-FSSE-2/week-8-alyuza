@@ -7,8 +7,18 @@ dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT || 8000;
-
 app.use(bodyParser.json());
+
+app.listen(port, () => {
+    console.log(`⚡️[server]: Server is running at localhost:${port}`);
+});
+
+// ================== Home ==========================
+app.get("/=", (req: Request, res: Response) => {
+    res.json({
+        messages: "Week 8 Assignment Alyuza",
+    });
+});
 
 // ================== Get all transactions ==========================
 app.get("/transactions", (req: Request, res: Response) => {
@@ -67,6 +77,23 @@ app.delete('/transactions/:transId', (req: Request, res: Response) => {
     }
 });
 
-app.listen(port, () => {
-    console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
-});
+// =================== Put Method ===========================
+// app.put('/transactions/:transId', (req: Request, res: Response) => {
+//     const id = parseInt(req.params.transId);
+//     const financialIndex = transactions.findIndex((obj) => obj.transId === id);
+//     if (financialIndex !== -1) {
+//         const updatedFinancial: Tran = {
+//             id,
+//             type: req.body.type,
+//             finance: req.body.finance,
+//             detail: req.body.detail,
+//             cash: req.body.cash,
+//         };
+//         financial[financialIndex] = updatedFinancial;
+//         res.json(updatedFinancial);
+//     } else {
+//         res.status(404).json({ message: 'Financial  is Not Found' });
+//     }
+// });
+
+export default app;
