@@ -1,7 +1,7 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
-import { Transaction, transactions } from "./data"; // import transactions dari lokasi ./data.ts
+import { transactions } from "./data"; // import transactions dari lokasi ./data.ts
 
 dotenv.config();
 
@@ -10,14 +10,15 @@ const port = process.env.PORT || 8000;
 app.use(bodyParser.json());
 
 app.listen(port, () => {
-    console.log(`⚡️[server]: Server is running at localhost:${port}`);
+    console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
 });
 
-// ================== Home ==========================
-app.get("/=", (req: Request, res: Response) => {
+app.get("/", (req: Request, res: Response) => {
     res.json({
-        messages: "Week 8 Assignment Alyuza",
+        messages: "Assignment Week 8",
+        transactions,
     });
+
 });
 
 // ================== Get all transactions ==========================
@@ -48,7 +49,7 @@ app.get("/transactions/:transId", (req: Request, res: Response) => {
 
 // ======================== Post Method ==========================
 app.post('/transactions/', (req: Request, res: Response) => {
-    const newPost: Transaction = {
+    const newPost = {
         transId: req.body.transId,
         name: req.body.name,
         inputType: req.body.inputType,
@@ -76,24 +77,5 @@ app.delete('/transactions/:transId', (req: Request, res: Response) => {
         res.status(404).json({ message: 'Financial  is Not Found' });
     }
 });
-
-// =================== Put Method ===========================
-// app.put('/transactions/:transId', (req: Request, res: Response) => {
-//     const id = parseInt(req.params.transId);
-//     const financialIndex = transactions.findIndex((obj) => obj.transId === id);
-//     if (financialIndex !== -1) {
-//         const updatedFinancial: Tran = {
-//             id,
-//             type: req.body.type,
-//             finance: req.body.finance,
-//             detail: req.body.detail,
-//             cash: req.body.cash,
-//         };
-//         financial[financialIndex] = updatedFinancial;
-//         res.json(updatedFinancial);
-//     } else {
-//         res.status(404).json({ message: 'Financial  is Not Found' });
-//     }
-// });
 
 export default app;
